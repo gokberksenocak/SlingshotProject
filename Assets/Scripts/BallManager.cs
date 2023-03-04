@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class BallManager : MonoBehaviour
 {
+    [SerializeField] private Sounds _sounds;
     [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private AISpawner _aiController;
     public static int _defeatedEnemyCount;
@@ -20,7 +21,7 @@ public class BallManager : MonoBehaviour
         {
             Material ballmaterial = transform.GetComponent<MeshRenderer>().sharedMaterial;
             Material aiMaterial = other.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMaterial;
-
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.BallImpactSound);
             if (ballmaterial == aiMaterial)
             {
                 _defeatedEnemyCount++;
@@ -42,6 +43,7 @@ public class BallManager : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Ground") && _playerManager.IsFinish)
         {
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.BallImpactSound);
             if (_playerManager.CollectedBalls.Count==0)
             {
                 GameObject[] allNPCs = GameObject.FindGameObjectsWithTag("NPC");
@@ -62,7 +64,7 @@ public class BallManager : MonoBehaviour
     {
         if (_defeatedEnemyCount==_levelNPCCount)
         {
-            Debug.Log("win");
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.WinSound);
         }
     }
 }

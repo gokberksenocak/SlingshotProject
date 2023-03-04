@@ -7,6 +7,7 @@ using DG.Tweening;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private Sounds _sounds;
     [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private GameObject _startPanel;
     [SerializeField] private GameObject _uiPanel;
@@ -55,6 +56,7 @@ public class UIManager : MonoBehaviour
         }
         if (_timerIcon.fillAmount == 0)
         {
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.MagnetEnd);
             StopCoroutine(TimeCount());
             _timerBG.transform.position = _timerFirstPos.position;
             _timerIcon.transform.position = _timerFirstPos.position;

@@ -7,6 +7,7 @@ public class AISpawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _npcList;
     [SerializeField] private Transform[] _npcSpawnPositions;
+    [SerializeField] private float _respawnSpeed;
     private int _randomIndex;
     public List<GameObject> NPCList
     {
@@ -26,6 +27,6 @@ public class AISpawner : MonoBehaviour
     }
     public void CallInvoke()
     {
-        InvokeRepeating(nameof(RandomNPCBorn), .7f, 1.5f);
+        InvokeRepeating(nameof(RandomNPCBorn), .55f, _respawnSpeed);
     }
 }

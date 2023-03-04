@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 public class AIManager : MonoBehaviour
 {
+    [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private Transform _player;
     private NavMeshAgent _agent;
     void Start()
@@ -12,6 +13,9 @@ public class AIManager : MonoBehaviour
     }
     void Update()
     {
-        _agent.SetDestination(_player.position);
+        if (!_playerManager.IsDancing)
+        {
+            _agent.SetDestination(_player.position);
+        }
     }
 }

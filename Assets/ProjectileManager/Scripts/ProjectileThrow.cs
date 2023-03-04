@@ -54,6 +54,8 @@ namespace ProjectileManager
         [SerializeField] private GameObject _touchManage;//
         [SerializeField] private ColorCalculation _colorCalculation;//
         [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;//
+        [SerializeField] private Sounds _sounds;//
+        private bool _firstEntry;
         public enum ArchLimit
         {
             Height = 0,
@@ -168,8 +170,14 @@ namespace ProjectileManager
         {
             GameObject obj = _playerManager.CollectedBalls[0];//
             obj.transform.position = shootPoint.transform.position;//
-            _skinnedMeshRenderer.SetBlendShapeWeight(0, 100);//
-            _playerManager.PlayerAnimator.SetBool("isShoot", true);
+            if (!_firstEntry)
+            {
+                _sounds.AudioManagerSource.PlayOneShot(_sounds.StretchSound);
+                _skinnedMeshRenderer.SetBlendShapeWeight(0, 100);//
+                _playerManager.PlayerAnimator.SetBool("isShoot", true);//
+                _firstEntry = true;//
+            }
+            
 
             Vector3 shootPos = shootPoint.transform.position;///////////
             Vector3 hitPos = pos;
@@ -215,8 +223,10 @@ namespace ProjectileManager
             _playerManager.CollectedBalls.RemoveAt(0);//
             _colorCalculation.ColorBallCount();//
             _touchManage.SetActive(false);//
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.ShootingSound);//
             _skinnedMeshRenderer.SetBlendShapeWeight(0, 0);//
-            _playerManager.PlayerAnimator.SetBool("isShoot", false);
+            _playerManager.PlayerAnimator.SetBool("isShoot", false);//
+            _firstEntry = false;//
 
             if (_playerManager.CollectedBalls.Count > 0)
             {

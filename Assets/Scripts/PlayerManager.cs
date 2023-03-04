@@ -7,6 +7,7 @@ using Cinemachine;
 using ProjectileManager;
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] private Sounds _sounds;
     [SerializeField] private AISpawner _aIController;
     [SerializeField] private ProjectileThrow _projectileThrow;
     [SerializeField] private UIManager _uiManager;
@@ -26,6 +27,7 @@ public class PlayerManager : MonoBehaviour
 
     private bool _isStart = false;
     private bool _isFinish = false;
+    private bool _isDancing = false;
     private bool _isMagnetCollected;
     private GateManager _gateManager;
 
@@ -53,6 +55,11 @@ public class PlayerManager : MonoBehaviour
     {
         get {return _collectedBalls; }
         set {_collectedBalls=value; }
+    }
+    public bool IsDancing 
+    {
+        get {return _isDancing; }
+        set {_isDancing=value; }
     }
     private void Update()
     {
@@ -103,12 +110,13 @@ public class PlayerManager : MonoBehaviour
         }
         else if (other.CompareTag("Gate"))
         {
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.GateHitSound);
             _gateManager = other.GetComponent<GateManager>();
             TakeGateSkill();
-          
         }
         else if (other.CompareTag("Magnet"))
         {
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.MagnetCollect);
             other.gameObject.SetActive(false);
             _isMagnetCollected = true;
             _uiManager.MagnetTimer();
@@ -133,6 +141,7 @@ public class PlayerManager : MonoBehaviour
         }
         else if (other.CompareTag("Ball"))
         {
+            //_sounds.AudioManagerSource.PlayOneShot(_sounds.BallTake);
             _collectedBalls.Add(other.gameObject);
             other.gameObject.SetActive(false);
             _colorCalculation.ColorBallCount();
@@ -144,6 +153,27 @@ public class PlayerManager : MonoBehaviour
         else if (other.CompareTag("NPC"))
         {
             Debug.Log("loose");
+            _isDancing = true;
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.LooseSound);
+            GameObject[] _npcs = GameObject.FindGameObjectsWithTag("NPC");
+            for (int i = 0; i < _npcs.Length; i++)
+            {
+                _npcs[i].GetComponent<Animator>().SetBool("isDancing", true);
+            }
+            for (int i = 0; i < _balls.Length; i++)
+            {
+                _balls[i].SetActive(false);
+            }
+            for (int i = 0; i < _collectedBalls.Count; i++)
+            {
+                _collectedBalls[i].SetActive(false);
+            }
+            _sling.gameObject.SetActive(false);
+            //particle gelecek
+            //panel gelecek
+            //ses panelden sonraya ayarlanacak
+            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().enabled = false;
+            transform.GetChild(2).GetComponent<MeshRenderer>().enabled = false;
         }
     }
     void TakeGateSkill()
@@ -206,6 +236,7 @@ public class PlayerManager : MonoBehaviour
         {
             _collectedBalls[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             yield return new WaitForSeconds(.05f);
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.BallTake);
             _collectedBalls[i].SetActive(true);
             _collectedBalls[i].transform.position = _basket.position + (.33f * positionOrder * Vector3.up);
             positionOrder++;
