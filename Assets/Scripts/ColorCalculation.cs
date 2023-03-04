@@ -8,18 +8,18 @@ public class ColorCalculation : MonoBehaviour
     [SerializeField] private UIManager _uiManager;
     [SerializeField] private Material _green;
     [SerializeField] private Material _red;
-    [SerializeField] private Material _purple;
+    [SerializeField] private Material _blue;
     private int _greenBallCount;
     private int _redBallCount;
-    private int _purpleBallCount;
+    private int _blueBallCount;
     public void ColorBallCount()
     {
         _greenBallCount = 0;
         _redBallCount = 0;
-        _purpleBallCount = 0;
+        _blueBallCount = 0;
         _uiManager.ColorTexts[0].text = _greenBallCount.ToString();
         _uiManager.ColorTexts[1].text = _redBallCount.ToString();
-        _uiManager.ColorTexts[2].text = _purpleBallCount.ToString();
+        _uiManager.ColorTexts[2].text = _blueBallCount.ToString();
 
         for (int i = 0; i < _playerManager.CollectedBalls.Count; i++)
         {
@@ -34,10 +34,10 @@ public class ColorCalculation : MonoBehaviour
                 _redBallCount++;
                 _uiManager.ColorTexts[1].text = _redBallCount.ToString();
             }
-            else if (ballMaterial == _purple)
+            else if (ballMaterial == _blue)
             {
-                _purpleBallCount++;
-                _uiManager.ColorTexts[2].text = _purpleBallCount.ToString();
+                _blueBallCount++;
+                _uiManager.ColorTexts[2].text = _blueBallCount.ToString();
             }
         }
     }

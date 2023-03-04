@@ -12,6 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _startPanel;
     [SerializeField] private GameObject _uiPanel;
     [SerializeField] private GameObject _inputPanel;
+    [SerializeField] private GameObject _winPanel;
+    [SerializeField] private GameObject _loosePanel;
+    [SerializeField] private GameObject _examplePanelPos;
     [SerializeField] private Image _timerIcon;
     [SerializeField] private Image _timerBG;
     [SerializeField] private Transform _timerLastPos;
@@ -28,6 +31,28 @@ public class UIManager : MonoBehaviour
         get {return _inputPanel; }
         set {_inputPanel=value; }
     }
+    public GameObject WinPanel
+    {
+        get { return _winPanel; }
+        set { _winPanel = value; }
+    }
+    public GameObject LoosePanel
+    {
+        get { return _loosePanel; }
+        set { _loosePanel = value; }
+    }
+
+    public GameObject UIPanel
+    {
+        get { return _uiPanel; }
+        set { _uiPanel = value; }
+    }
+    public GameObject ExamplePanel
+    {
+        get { return _examplePanelPos; }
+        set { _examplePanelPos = value; }
+    }
+
     public void StartGameEvents()
     {
         for (int i = 0; i < _obstacleAnimators.Length; i++)

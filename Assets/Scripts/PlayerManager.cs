@@ -7,6 +7,8 @@ using Cinemachine;
 using ProjectileManager;
 public class PlayerManager : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem[] _playerParticles;
+    [SerializeField] private Transform _particlePoint;
     [SerializeField] private Sounds _sounds;
     [SerializeField] private AISpawner _aIController;
     [SerializeField] private ProjectileThrow _projectileThrow;
@@ -89,6 +91,9 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count!=0)
             {
+                Vibration.Vibrate(50);
+                _playerParticles[1].transform.position = _particlePoint.position;
+                _playerParticles[1].Play();
                 StartCoroutine(BallDrop(5));
             }    
         }
@@ -97,6 +102,9 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count != 0)
             {
+                Vibration.Vibrate(50);
+                _playerParticles[1].transform.position = _particlePoint.position;
+                _playerParticles[1].Play();
                 StartCoroutine(BallDrop(2));
             }
         }
@@ -105,6 +113,9 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count != 0)
             {
+                Vibration.Vibrate(50);
+                _playerParticles[1].transform.position = _particlePoint.position;
+                _playerParticles[1].Play();
                 StartCoroutine(BallDrop(1));
             }
         }
@@ -117,6 +128,8 @@ public class PlayerManager : MonoBehaviour
         else if (other.CompareTag("Magnet"))
         {
             _sounds.AudioManagerSource.PlayOneShot(_sounds.MagnetCollect);
+            _playerParticles[2].transform.position = _particlePoint.position;
+            _playerParticles[2].Play();
             other.gameObject.SetActive(false);
             _isMagnetCollected = true;
             _uiManager.MagnetTimer();
@@ -141,7 +154,7 @@ public class PlayerManager : MonoBehaviour
         }
         else if (other.CompareTag("Ball"))
         {
-            //_sounds.AudioManagerSource.PlayOneShot(_sounds.BallTake);
+            _sounds.AudioManagerSource.PlayOneShot(_sounds.BallTake);
             _collectedBalls.Add(other.gameObject);
             other.gameObject.SetActive(false);
             _colorCalculation.ColorBallCount();
@@ -152,9 +165,8 @@ public class PlayerManager : MonoBehaviour
         }
         else if (other.CompareTag("NPC"))
         {
-            Debug.Log("loose");
+            Vibration.Vibrate(50);
             _isDancing = true;
-            _sounds.AudioManagerSource.PlayOneShot(_sounds.LooseSound);
             GameObject[] _npcs = GameObject.FindGameObjectsWithTag("NPC");
             for (int i = 0; i < _npcs.Length; i++)
             {
@@ -169,11 +181,15 @@ public class PlayerManager : MonoBehaviour
                 _collectedBalls[i].SetActive(false);
             }
             _sling.gameObject.SetActive(false);
-            //particle gelecek
-            //panel gelecek
-            //ses panelden sonraya ayarlanacak
-            transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().enabled = false;
-            transform.GetChild(2).GetComponent<MeshRenderer>().enabled = false;
+            _playerParticles[3].transform.position = _particlePoint.position;
+            _playerParticles[3].Play();
+            _uiManager.UIPanel.SetActive(false);
+            _uiManager.LoosePanel.SetActive(true);
+            _uiManager.LoosePanel.transform.DOMove(_uiManager.ExamplePanel.transform.position, 2.25f).OnComplete(() => 
+            {
+                _sounds.AudioManagerSource.PlayOneShot(_sounds.LooseSound);
+                gameObject.SetActive(false);
+            });
         }
     }
     void TakeGateSkill()
@@ -262,6 +278,7 @@ public class PlayerManager : MonoBehaviour
     }
     void MagnetTimeUp()
     {
+        _playerParticles[2].Stop();
         _isMagnetCollected = false;
     }
 }

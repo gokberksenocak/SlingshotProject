@@ -2,14 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 public class BallManager : MonoBehaviour
 {
+    [SerializeField] private UIManager _uiManager;
     [SerializeField] private Sounds _sounds;
     [SerializeField] private PlayerManager _playerManager;
     [SerializeField] private AISpawner _aiController;
+    [SerializeField] private Material _green;
+    [SerializeField] private Material _red;
+    [SerializeField] private Material _blue;
+    [SerializeField] private ParticleSystem _confettiParticle;
+    [SerializeField] private ParticleSystem[] _ballParticles;
     public static int _defeatedEnemyCount;
-    public int _levelNPCCount;
+    private int _levelNPCCount;
 
     private void Start()
     {
@@ -22,6 +29,7 @@ public class BallManager : MonoBehaviour
             Material ballmaterial = transform.GetComponent<MeshRenderer>().sharedMaterial;
             Material aiMaterial = other.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMaterial;
             _sounds.AudioManagerSource.PlayOneShot(_sounds.BallImpactSound);
+            PlayBallExplodeParticle();
             if (ballmaterial == aiMaterial)
             {
                 _defeatedEnemyCount++;
@@ -43,6 +51,7 @@ public class BallManager : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Ground") && _playerManager.IsFinish)
         {
+            PlayBallExplodeParticle();
             _sounds.AudioManagerSource.PlayOneShot(_sounds.BallImpactSound);
             if (_playerManager.CollectedBalls.Count==0)
             {
@@ -60,11 +69,39 @@ public class BallManager : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    void PlayBallExplodeParticle()
+    {
+        Material material = transform.GetComponent<MeshRenderer>().sharedMaterial;
+        if (material==_green)
+        {
+            _ballParticles[0].transform.position = transform.position;
+            _ballParticles[0].Play();
+        }
+        else if (material==_red)
+        {
+            _ballParticles[1].transform.position = transform.position;
+            _ballParticles[1].Play();
+        }
+        else
+        {
+            _ballParticles[2].transform.position = transform.position;
+            _ballParticles[2].Play();
+        }
+    }
     void WinCheck()
     {
-        if (_defeatedEnemyCount==_levelNPCCount)
+        if (_defeatedEnemyCount == _levelNPCCount)
         {
-            _sounds.AudioManagerSource.PlayOneShot(_sounds.WinSound);
+            int lastBallCount = _playerManager.CollectedBalls.Count;
+            Debug.Log(lastBallCount);
+            _confettiParticle.Play();
+            _uiManager.UIPanel.SetActive(false);
+            _uiManager.WinPanel.SetActive(true);
+            _uiManager.WinPanel.transform.DOMove(_uiManager.ExamplePanel.transform.position, 2.75f).OnComplete(() =>
+            {
+                _sounds.AudioManagerSource.PlayOneShot(_sounds.WinSound);
+            });
         }
     }
 }
