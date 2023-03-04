@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 3
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 1cf6f4c6e6e0518419839d3f5448dd99, type: 2}
+  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.08024788, g: 0.09964816, b: 0.3010655, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -687,6 +687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0c383d0796a0a49b4a45500b1f1e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerManager: {fileID: 0}
   _player: {fileID: 6327792236163428755}
 --- !u!4 &77349050 stripped
 Transform:
@@ -839,6 +840,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0c383d0796a0a49b4a45500b1f1e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerManager: {fileID: 0}
   _player: {fileID: 6327792236163428755}
 --- !u!1 &105423039
 GameObject:
@@ -4935,6 +4937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0c383d0796a0a49b4a45500b1f1e08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerManager: {fileID: 0}
   _player: {fileID: 6327792236163428755}
 --- !u!1 &694736866 stripped
 GameObject:
@@ -9496,6 +9499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a17f6e59df765648882664e77c026e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _sounds: {fileID: 0}
   _playerManager: {fileID: 6672932975963712298}
   _startPanel: {fileID: 1553753191}
   _uiPanel: {fileID: 2143032687}
@@ -10070,6 +10074,7 @@ MonoBehaviour:
   - {fileID: 2116270342}
   - {fileID: 854433099}
   - {fileID: 1802516630}
+  _respawnSpeed: 0
 --- !u!4 &1833062766
 Transform:
   m_ObjectHideFlags: 0
