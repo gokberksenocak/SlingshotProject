@@ -170,6 +170,7 @@ namespace ProjectileManager
         {
             GameObject obj = _playerManager.CollectedBalls[0];//
             obj.transform.position = shootPoint.transform.position;//
+            obj.GetComponent<Collider>().enabled = true;
             if (!_firstEntry)
             {
                 _sounds.AudioManagerSource.PlayOneShot(_sounds.StretchSound);
@@ -230,7 +231,6 @@ namespace ProjectileManager
 
             if (_playerManager.CollectedBalls.Count > 0)
             {
-                _playerManager.CollectedBalls[0].transform.DOMove(shootPoint2.transform.position, .5f);
                 Invoke(nameof(ShootingDelay), .5f);
             }
 

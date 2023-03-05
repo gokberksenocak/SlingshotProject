@@ -140,7 +140,27 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count==0)
             {
-                Time.timeScale = 0;
+                _isStart = false;
+                _isFinish = true;
+                _animator.SetBool("isFinish", _isFinish);
+                Vibration.Vibrate(50);
+                for (int i = 0; i < _balls.Length; i++)
+                {
+                    _balls[i].SetActive(false);
+                }
+                for (int i = 0; i < _collectedBalls.Count; i++)
+                {
+                    _collectedBalls[i].SetActive(false);
+                }
+                _playerParticles[3].transform.position = _particlePoint.position;
+                _playerParticles[3].Play();
+                _uiManager.UIPanel.SetActive(false);
+                _uiManager.LoosePanel.SetActive(true);
+                _uiManager.LoosePanel.transform.DOMove(_uiManager.ExamplePanel.transform.position, 2.25f).OnComplete(() =>
+                {
+                    _sounds.AudioManagerSource.PlayOneShot(_sounds.LooseSound);
+                    gameObject.SetActive(false);
+                });
             }
             else
             {
@@ -200,7 +220,8 @@ public class PlayerManager : MonoBehaviour
         }
         else if (_gateManager.GateIndex == 1)
         {
-            for (int i = 0; i < 15; i++)
+            int firstIndex = _extraBalls.Count;
+            for (int i = 0; i < firstIndex; i++)
             {
                 _collectedBalls.Add(_extraBalls[0]);
                 _extraBalls.RemoveAt(0);
@@ -254,10 +275,11 @@ public class PlayerManager : MonoBehaviour
             yield return new WaitForSeconds(.05f);
             _sounds.AudioManagerSource.PlayOneShot(_sounds.BallTake);
             _collectedBalls[i].SetActive(true);
-            _collectedBalls[i].transform.position = _basket.position + (.33f * positionOrder * Vector3.up);
+            _collectedBalls[i].transform.position = _basket.position + new Vector3(0,.3f,0) + (.51f * positionOrder * Vector3.up);
             positionOrder++;
         }
         yield return new WaitForSeconds(.5f);
+        _collectedBalls[0].GetComponent<Collider>().enabled = false;
         _collectedBalls[0].transform.DOMove(_projectileThrow.shootPoint2.transform.position, .5f).OnComplete(()=> 
         {
             _aIController.CallInvoke();
@@ -269,7 +291,7 @@ public class PlayerManager : MonoBehaviour
     {
         _firstCam.Follow = null;
         _secondCam.Priority = 15;
-        _sling.gameObject.SetActive(true);
+        //_sling.gameObject.SetActive(true);
         transform.SetParent(_sling.transform);
         yield return new WaitForSeconds(1.8f);
         _basket.gameObject.SetActive(true);

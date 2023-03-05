@@ -17,12 +17,11 @@ public class BallManager : MonoBehaviour
     [SerializeField] private ParticleSystem[] _ballParticles;
     public static int _defeatedEnemyCount;
     private int _levelNPCCount;
-
     private void Start()
     {
         _levelNPCCount = _aiController.NPCList.Count;
     }
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("NPC"))
         {
@@ -39,17 +38,21 @@ public class BallManager : MonoBehaviour
             }
             else if (ballmaterial != aiMaterial)
             {
-                other.transform.localScale -= new Vector3(.25f, .25f, .25f);
-                if (other.transform.localScale.x < 1.1f)
+                other.GetComponent<NavMeshAgent>().speed /= 2;
+                if (other.GetComponent<Animator>().GetBool("isHitted"))
                 {
                     other.gameObject.SetActive(false);
                     _defeatedEnemyCount++;
                     WinCheck();
                 }
+                other.GetComponent<Animator>().SetBool("isHitted", true);
                 gameObject.SetActive(false);
             }
         }
-        else if (other.gameObject.CompareTag("Ground") && _playerManager.IsFinish)
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Ground") && _playerManager.IsFinish)
         {
             PlayBallExplodeParticle();
             _sounds.AudioManagerSource.PlayOneShot(_sounds.BallImpactSound);
@@ -69,7 +72,6 @@ public class BallManager : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
-
     void PlayBallExplodeParticle()
     {
         Material material = transform.GetComponent<MeshRenderer>().sharedMaterial;
