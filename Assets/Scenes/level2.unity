@@ -7801,10 +7801,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2070711121127803018, guid: d7d5886c2bff9724a889f1b6793056c3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.66
-      objectReference: {fileID: 0}
     - target: {fileID: 2070711121127803019, guid: d7d5886c2bff9724a889f1b6793056c3, type: 3}
       propertyPath: ground
       value: 
@@ -7889,18 +7885,6 @@ PrefabInstance:
       propertyPath: touchManager
       value: 
       objectReference: {fileID: 520376498096884408}
-    - target: {fileID: 8395941614216025648, guid: d7d5886c2bff9724a889f1b6793056c3, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
-    - target: {fileID: 9209774129676569738, guid: d7d5886c2bff9724a889f1b6793056c3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.41
-      objectReference: {fileID: 0}
-    - target: {fileID: 9209774129676569738, guid: d7d5886c2bff9724a889f1b6793056c3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1.28
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7d5886c2bff9724a889f1b6793056c3, type: 3}
 --- !u!1001 &2981137725680297085

@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2070711121127803017}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.51, z: -0.05}
+  m_LocalPosition: {x: 0, y: 1.719, z: -0.05}
   m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -171,6 +171,7 @@ MonoBehaviour:
   _touchManage: {fileID: 0}
   _colorCalculation: {fileID: 0}
   _skinnedMeshRenderer: {fileID: 6733505385153896962}
+  _sounds: {fileID: 0}
 --- !u!1 &2070711122386471164
 GameObject:
   m_ObjectHideFlags: 0
@@ -454,7 +455,7 @@ GameObject:
   - component: {fileID: 9209774129676569738}
   m_Layer: 0
   m_Name: ShootPoint
-  m_TagString: Ball
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -467,7 +468,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8395941614216025648}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.51, z: -1.32}
+  m_LocalPosition: {x: 0, y: 1.41, z: -1.28}
   m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
   m_ConstrainProportionsScale: 1
   m_Children: []

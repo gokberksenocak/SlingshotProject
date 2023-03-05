@@ -93,10 +93,11 @@ public class BallManager : MonoBehaviour
     }
     void WinCheck()
     {
+        Debug.Log(_defeatedEnemyCount);
         if (_defeatedEnemyCount == _levelNPCCount)
         {
-            int lastBallCount = _playerManager.CollectedBalls.Count;
-            Debug.Log(lastBallCount);
+            //int lastBallCount = _playerManager.CollectedBalls.Count;
+            //Debug.Log(lastBallCount);
             _confettiParticle.Play();
             _uiManager.UIPanel.SetActive(false);
             _uiManager.WinPanel.SetActive(true);

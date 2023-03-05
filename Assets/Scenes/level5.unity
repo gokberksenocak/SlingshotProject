@@ -13738,6 +13738,10 @@ PrefabInstance:
       propertyPath: m_BlendShapeWeights.Array.data[1]
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6733505385153896962, guid: d7d5886c2bff9724a889f1b6793056c3, type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[2]
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8189993543361853885, guid: d7d5886c2bff9724a889f1b6793056c3, type: 3}
       propertyPath: touchManager
       value: 

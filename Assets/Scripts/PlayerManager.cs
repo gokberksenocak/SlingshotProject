@@ -261,13 +261,6 @@ public class PlayerManager : MonoBehaviour
     IEnumerator EndBasket()
     {
         yield return new WaitForSeconds(1.9f);
-        /*for (int i = 0; i < _collectedBalls.Count; i++)
-        {
-            _collectedBalls[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-            yield return new WaitForSeconds(.1f);
-            _collectedBalls[i].SetActive(true);
-            _collectedBalls[i].transform.position=_basket.position + (.33f * i * Vector3.up);
-        }*/
         int positionOrder = 0;
         for (int i = _collectedBalls.Count-1; i >= 0; i--)
         {
