@@ -11,6 +11,16 @@ public class AISpawner : MonoBehaviour
     [SerializeField] private float _respawnSpeed;
     private int _randomIndex;
     private int _randomPosIndex;
+    private int _levelNPCCount;
+    public int LevelNPCCount 
+    {
+        get {return _levelNPCCount; }
+        set {_levelNPCCount=value; }
+    }
+    private void Start()
+    {
+        _levelNPCCount = _npcList.Count;
+    }
     public List<GameObject> NPCList
     {
         get { return _npcList; }

@@ -16,11 +16,7 @@ public class BallManager : MonoBehaviour
     [SerializeField] private ParticleSystem _confettiParticle;
     [SerializeField] private ParticleSystem[] _ballParticles;
     public static int _defeatedEnemyCount;
-    private int _levelNPCCount;
-    private void Start()
-    {
-        _levelNPCCount = _aiController.NPCList.Count;
-    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("NPC"))
@@ -93,8 +89,7 @@ public class BallManager : MonoBehaviour
     }
     void WinCheck()
     {
-        Debug.Log(_defeatedEnemyCount);
-        if (_defeatedEnemyCount == _levelNPCCount)
+        if (_defeatedEnemyCount == _aiController.LevelNPCCount)
         {
             //int lastBallCount = _playerManager.CollectedBalls.Count;
             //Debug.Log(lastBallCount);
