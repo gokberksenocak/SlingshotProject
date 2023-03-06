@@ -11,11 +11,17 @@ public class AISpawner : MonoBehaviour
     [SerializeField] private float _respawnSpeed;
     private int _randomIndex;
     private int _randomPosIndex;
-    private int _levelNPCCount;
+    public int _levelNPCCount;
+    public int _defeatedEnemyCount;
     public int LevelNPCCount 
     {
         get {return _levelNPCCount; }
         set {_levelNPCCount=value; }
+    }
+    public int DefeatedEnemyCount
+    {
+        get { return _defeatedEnemyCount; }
+        set { _defeatedEnemyCount = value; }
     }
     private void Start()
     {

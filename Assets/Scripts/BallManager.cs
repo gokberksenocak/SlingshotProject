@@ -15,7 +15,7 @@ public class BallManager : MonoBehaviour
     [SerializeField] private Material _blue;
     [SerializeField] private ParticleSystem _confettiParticle;
     [SerializeField] private ParticleSystem[] _ballParticles;
-    public static int _defeatedEnemyCount;
+    //public static int _defeatedEnemyCount;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,7 +27,7 @@ public class BallManager : MonoBehaviour
             PlayBallExplodeParticle();
             if (ballmaterial == aiMaterial)
             {
-                _defeatedEnemyCount++;
+                _aiController.DefeatedEnemyCount++;
                 other.gameObject.SetActive(false);
                 WinCheck();
                 gameObject.SetActive(false);
@@ -38,7 +38,7 @@ public class BallManager : MonoBehaviour
                 if (other.GetComponent<Animator>().GetBool("isHitted"))
                 {
                     other.gameObject.SetActive(false);
-                    _defeatedEnemyCount++;
+                    _aiController.DefeatedEnemyCount++;
                     WinCheck();
                 }
                 other.GetComponent<Animator>().SetBool("isHitted", true);
@@ -89,7 +89,7 @@ public class BallManager : MonoBehaviour
     }
     void WinCheck()
     {
-        if (_defeatedEnemyCount == _aiController.LevelNPCCount)
+        if (_aiController.DefeatedEnemyCount == _aiController.LevelNPCCount)
         {
             //int lastBallCount = _playerManager.CollectedBalls.Count;
             //Debug.Log(lastBallCount);
