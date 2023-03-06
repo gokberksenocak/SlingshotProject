@@ -170,7 +170,7 @@ namespace ProjectileManager
         {
             GameObject obj = _playerManager.CollectedBalls[0];//
             obj.transform.position = shootPoint.transform.position;//
-            obj.GetComponent<Collider>().enabled = true;
+            //obj.GetComponent<Collider>().enabled = true;
             if (!_firstEntry)
             {
                 _sounds.AudioManagerSource.PlayOneShot(_sounds.StretchSound);
@@ -218,6 +218,7 @@ namespace ProjectileManager
             //GameObject obj = Instantiate(shootObj, shootPoint.transform.position, Quaternion.identity);
             GameObject obj = _playerManager.CollectedBalls[0];//
             obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;//
+            obj.GetComponent<Collider>().enabled = true;
             Rigidbody rig = obj.GetComponent<Rigidbody>();
             Vector3 force = shootVec * rig.mass;
             rig.AddForce(force, ForceMode.Impulse);

@@ -52,7 +52,7 @@ public class BallManager : MonoBehaviour
         {
             PlayBallExplodeParticle();
             _sounds.AudioManagerSource.PlayOneShot(_sounds.BallImpactSound);
-            if (_playerManager.CollectedBalls.Count==0)
+            if (_playerManager.CollectedBalls.Count==1)
             {
                 GameObject[] allNPCs = GameObject.FindGameObjectsWithTag("NPC");
                 for (int i = 0; i < allNPCs.Length; i++)
@@ -96,9 +96,10 @@ public class BallManager : MonoBehaviour
             _confettiParticle.Play();
             _uiManager.UIPanel.SetActive(false);
             _uiManager.WinPanel.SetActive(true);
-            _uiManager.WinPanel.transform.DOMove(_uiManager.ExamplePanel.transform.position, 2.75f).OnComplete(() =>
+            _uiManager.WinPanel.transform.DOMove(_uiManager.ExamplePanel.transform.position, 3f).OnComplete(() =>
             {
                 _sounds.AudioManagerSource.PlayOneShot(_sounds.WinSound);
+                Time.timeScale = 0;
             });
         }
     }

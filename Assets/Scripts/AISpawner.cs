@@ -25,6 +25,7 @@ public class AISpawner : MonoBehaviour
     }
     private void Start()
     {
+        Time.timeScale = 1;
         _levelNPCCount = _npcList.Count;
     }
     public List<GameObject> NPCList

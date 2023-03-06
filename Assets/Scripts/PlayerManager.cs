@@ -91,7 +91,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count!=0)
             {
-                Vibration.Vibrate(50);
+                Vibration.Vibrate(60);
                 _playerParticles[1].transform.position = _particlePoint.position;
                 _playerParticles[1].Play();
                 StartCoroutine(BallDrop(5));
@@ -102,7 +102,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count != 0)
             {
-                Vibration.Vibrate(50);
+                Vibration.Vibrate(60);
                 _playerParticles[1].transform.position = _particlePoint.position;
                 _playerParticles[1].Play();
                 StartCoroutine(BallDrop(2));
@@ -113,7 +113,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count != 0)
             {
-                Vibration.Vibrate(50);
+                Vibration.Vibrate(60);
                 _playerParticles[1].transform.position = _particlePoint.position;
                 _playerParticles[1].Play();
                 StartCoroutine(BallDrop(1));
@@ -143,7 +143,7 @@ public class PlayerManager : MonoBehaviour
                 _isStart = false;
                 _isFinish = true;
                 _animator.SetBool("isFinish", _isFinish);
-                Vibration.Vibrate(50);
+                Vibration.Vibrate(60);
                 for (int i = 0; i < _balls.Length; i++)
                 {
                     _balls[i].SetActive(false);
@@ -208,6 +208,7 @@ public class PlayerManager : MonoBehaviour
             _uiManager.LoosePanel.transform.DOMove(_uiManager.ExamplePanel.transform.position, 2.25f).OnComplete(() => 
             {
                 _sounds.AudioManagerSource.PlayOneShot(_sounds.LooseSound);
+                Time.timeScale = 0;
                 gameObject.SetActive(false);
             });
         }
@@ -268,6 +269,7 @@ public class PlayerManager : MonoBehaviour
             yield return new WaitForSeconds(.05f);
             _sounds.AudioManagerSource.PlayOneShot(_sounds.BallTake);
             _collectedBalls[i].SetActive(true);
+            _collectedBalls[i].GetComponent<Collider>().enabled = false;
             _collectedBalls[i].transform.position = _basket.position + new Vector3(0,.3f,0) + (.51f * positionOrder * Vector3.up);
             positionOrder++;
         }
