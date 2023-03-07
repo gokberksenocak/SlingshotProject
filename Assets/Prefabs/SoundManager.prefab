@@ -151,3 +151,4 @@ MonoBehaviour:
   _ballTake: {fileID: 8300000, guid: 153a83bad1d155e4fa85bd87f48a9d3c, type: 3}
   _looseSound: {fileID: 8300000, guid: 54350ba83d60fec4a8ab81806bbbf486, type: 3}
   _winSound: {fileID: 8300000, guid: b019c58e24da57f40afb86bfb3b85e6b, type: 3}
+  _whooshSound: {fileID: 8300000, guid: aac0d75830a3c3f42bc402cf78586a6f, type: 3}

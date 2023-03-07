@@ -244,6 +244,7 @@ public class PlayerManager : MonoBehaviour
         for (int i = 0; i < dropCount; i++)
         {
             int ballIndex = Random.Range(0, dropCount - i);
+            Destroy(_collectedBalls[ballIndex].GetComponent<BallManager>());
             _collectedBalls[ballIndex].tag = "Respawn";
             _collectedBalls[ballIndex].transform.position = transform.position - new Vector3(Random.Range(-.2f, .2f), -1f, Random.Range(.1f, .2f));
             _collectedBalls[ballIndex].SetActive(true);
@@ -286,6 +287,8 @@ public class PlayerManager : MonoBehaviour
     {
         _firstCam.Follow = null;
         _secondCam.Priority = 15;
+        _sounds.AudioManagerSource.clip = _sounds.WhooshSound;
+        _sounds.AudioManagerSource.PlayDelayed(1f);
         //_sling.gameObject.SetActive(true);
         transform.SetParent(_sling.transform);
         yield return new WaitForSeconds(1.8f);
