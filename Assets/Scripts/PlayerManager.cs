@@ -91,7 +91,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count!=0)
             {
-                Vibration.Vibrate(60);
+                Vibration.Vibrate(100);
                 _playerParticles[1].transform.position = _particlePoint.position;
                 _playerParticles[1].Play();
                 StartCoroutine(BallDrop(5));
@@ -102,7 +102,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count != 0)
             {
-                Vibration.Vibrate(60);
+                Vibration.Vibrate(100);
                 _playerParticles[1].transform.position = _particlePoint.position;
                 _playerParticles[1].Play();
                 StartCoroutine(BallDrop(2));
@@ -113,7 +113,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (_collectedBalls.Count != 0)
             {
-                Vibration.Vibrate(60);
+                Vibration.Vibrate(100);
                 _playerParticles[1].transform.position = _particlePoint.position;
                 _playerParticles[1].Play();
                 StartCoroutine(BallDrop(1));
@@ -143,7 +143,7 @@ public class PlayerManager : MonoBehaviour
                 _isStart = false;
                 _isFinish = true;
                 _animator.SetBool("isFinish", _isFinish);
-                Vibration.Vibrate(60);
+                Vibration.Vibrate(100);
                 for (int i = 0; i < _balls.Length; i++)
                 {
                     _balls[i].SetActive(false);
@@ -164,10 +164,13 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                _isStart = false;
-                _isFinish = true;
-                _animator.SetBool("isFinish", _isFinish);
-                StartCoroutine(EndBasket());
+                transform.DOMove(_sling.position+(Vector3.back*2.1f), 1.5f).OnComplete(() => 
+                {
+                    _isStart = false;
+                    _isFinish = true;
+                    _animator.SetBool("isFinish", _isFinish);
+                    StartCoroutine(EndBasket());
+                });
                 StartCoroutine(ReachToSling());
             }
            
@@ -262,7 +265,6 @@ public class PlayerManager : MonoBehaviour
     }
     IEnumerator EndBasket()
     {
-        yield return new WaitForSeconds(1.9f);
         int positionOrder = 0;
         for (int i = _collectedBalls.Count-1; i >= 0; i--)
         {
@@ -285,15 +287,11 @@ public class PlayerManager : MonoBehaviour
 
     IEnumerator ReachToSling()
     {
-        _firstCam.Follow = null;
-        _secondCam.Priority = 15;
-        _sounds.AudioManagerSource.clip = _sounds.WhooshSound;
-        _sounds.AudioManagerSource.PlayDelayed(1f);
-        //_sling.gameObject.SetActive(true);
+        _uiManager.InputPanel.SetActive(false);
         transform.SetParent(_sling.transform);
         yield return new WaitForSeconds(1.8f);
-        _basket.gameObject.SetActive(true);
-        _uiManager.InputPanel.SetActive(false);
+        _firstCam.Follow = null;
+        _secondCam.Priority = 15;
         transform.GetComponent<ParentConstraint>().enabled = true;
     }
     void MagnetTimeUp()

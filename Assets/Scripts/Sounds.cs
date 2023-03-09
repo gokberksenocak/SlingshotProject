@@ -14,7 +14,6 @@ public class Sounds : MonoBehaviour
     [SerializeField] private AudioClip _ballTake;
     [SerializeField] private AudioClip _looseSound;
     [SerializeField] private AudioClip _winSound;
-    [SerializeField] private AudioClip _whooshSound;
 
     public AudioSource AudioManagerSource
     {
@@ -65,10 +64,5 @@ public class Sounds : MonoBehaviour
     {
         get { return _winSound; }
         set { _winSound = value; }
-    }
-    public AudioClip WhooshSound
-    {
-        get { return _whooshSound; }
-        set { _whooshSound = value; }
     }
 }
