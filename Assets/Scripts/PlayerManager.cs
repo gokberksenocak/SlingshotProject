@@ -63,14 +63,6 @@ public class PlayerManager : MonoBehaviour
         get {return _isDancing; }
         set {_isDancing=value; }
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            transform.SetParent(_sling.transform);
-            transform.GetComponent<ParentConstraint>().enabled = true;
-        }
-    }
     void FixedUpdate()
     {
         if (_isMagnetCollected)
@@ -155,6 +147,7 @@ public class PlayerManager : MonoBehaviour
                 _playerParticles[3].transform.position = _particlePoint.position;
                 _playerParticles[3].Play();
                 _uiManager.UIPanel.SetActive(false);
+                _uiManager.InputPanel.SetActive(false);
                 _uiManager.LoosePanel.SetActive(true);
                 _uiManager.LoosePanel.transform.DOMove(_uiManager.ExamplePanel.transform.position, 2.25f).OnComplete(() =>
                 {
@@ -207,6 +200,7 @@ public class PlayerManager : MonoBehaviour
             _playerParticles[3].transform.position = _particlePoint.position;
             _playerParticles[3].Play();
             _uiManager.UIPanel.SetActive(false);
+            _uiManager.InputPanel.SetActive(false);
             _uiManager.LoosePanel.SetActive(true);
             _uiManager.LoosePanel.transform.DOMove(_uiManager.ExamplePanel.transform.position, 2.25f).OnComplete(() => 
             {
@@ -266,20 +260,21 @@ public class PlayerManager : MonoBehaviour
     IEnumerator EndBasket()
     {
         int positionOrder = 0;
-        for (int i = _collectedBalls.Count-1; i >= 0; i--)
+        for (int i = 0; i < _collectedBalls.Count; i++)
         {
+            _collectedBalls[i].GetComponent<Collider>().enabled = false;
             _collectedBalls[i].GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             yield return new WaitForSeconds(.05f);
             _sounds.AudioManagerSource.PlayOneShot(_sounds.BallTake);
             _collectedBalls[i].SetActive(true);
-            _collectedBalls[i].GetComponent<Collider>().enabled = false;
-            _collectedBalls[i].transform.position = _basket.position + new Vector3(0,.3f,0) + (.51f * positionOrder * Vector3.up);
+            _collectedBalls[i].transform.position = _basket.position + new Vector3(0, -.3f, 0) - (.51f * positionOrder * Vector3.up);
             positionOrder++;
         }
+
         yield return new WaitForSeconds(.5f);
-        _collectedBalls[0].GetComponent<Collider>().enabled = false;
         _collectedBalls[0].transform.DOMove(_projectileThrow.shootPoint2.transform.position, .5f).OnComplete(()=> 
         {
+            BallsToUp();
             _aIController.CallInvoke();
             _touchManage.SetActive(true);
         });
@@ -298,5 +293,12 @@ public class PlayerManager : MonoBehaviour
     {
         _playerParticles[2].Stop();
         _isMagnetCollected = false;
+    }
+    public void BallsToUp()
+    {
+        for (int i = 1; i < _collectedBalls.Count; i++)
+        {
+            _collectedBalls[i].transform.DOMoveY(_collectedBalls[i].transform.position.y + .51f, .15f);
+        }
     }
 }

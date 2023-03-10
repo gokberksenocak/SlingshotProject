@@ -233,6 +233,7 @@ namespace ProjectileManager
             if (_playerManager.CollectedBalls.Count > 0)
             {
                 _playerManager.CollectedBalls[0].transform.DOMove(shootPoint2.transform.position, .5f);//
+                _playerManager.BallsToUp();
                 Invoke(nameof(ShootingDelay), .5f);
             }
 

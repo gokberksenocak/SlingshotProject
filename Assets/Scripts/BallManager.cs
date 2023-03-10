@@ -15,7 +15,6 @@ public class BallManager : MonoBehaviour
     [SerializeField] private Material _blue;
     [SerializeField] private ParticleSystem _confettiParticle;
     [SerializeField] private ParticleSystem[] _ballParticles;
-    //public static int _defeatedEnemyCount;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -25,6 +24,21 @@ public class BallManager : MonoBehaviour
             Material aiMaterial = other.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMaterial;
             _sounds.AudioManagerSource.PlayOneShot(_sounds.BallImpactSound);
             PlayBallExplodeParticle();
+
+            if (_playerManager.CollectedBalls.Count == 0)
+            {
+                GameObject[] allNPCs = GameObject.FindGameObjectsWithTag("NPC");
+                for (int i = 0; i < allNPCs.Length; i++)
+                {
+                    allNPCs[i].GetComponent<NavMeshAgent>().speed += 5f;
+                }
+
+                for (int i = 0; i < _aiController.NPCList.Count; i++)
+                {
+                    _aiController.NPCList[i].GetComponent<NavMeshAgent>().speed += 5f;
+                }
+            }
+
             if (ballmaterial == aiMaterial)
             {
                 _aiController.DefeatedEnemyCount++;
@@ -52,7 +66,7 @@ public class BallManager : MonoBehaviour
         {
             PlayBallExplodeParticle();
             _sounds.AudioManagerSource.PlayOneShot(_sounds.BallImpactSound);
-            if (_playerManager.CollectedBalls.Count==1)
+            if (_playerManager.CollectedBalls.Count==0)
             {
                 GameObject[] allNPCs = GameObject.FindGameObjectsWithTag("NPC");
                 for (int i = 0; i < allNPCs.Length; i++)
@@ -91,10 +105,9 @@ public class BallManager : MonoBehaviour
     {
         if (_aiController.DefeatedEnemyCount == _aiController.LevelNPCCount)
         {
-            //int lastBallCount = _playerManager.CollectedBalls.Count;
-            //Debug.Log(lastBallCount);
             _confettiParticle.Play();
             _uiManager.UIPanel.SetActive(false);
+            _uiManager.InputPanel.SetActive(false);
             _uiManager.WinPanel.SetActive(true);
             _uiManager.WinPanel.transform.DOMove(_uiManager.ExamplePanel.transform.position, 3f).OnComplete(() =>
             {

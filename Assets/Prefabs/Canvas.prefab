@@ -1218,8 +1218,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerManager: {fileID: 0}
   _player: {fileID: 0}
-  _sensivity: 0.02
-  _speed: 7
+  _sensivity: 0.012
+  _speed: 8
 --- !u!1 &8285881458983156649
 GameObject:
   m_ObjectHideFlags: 0
