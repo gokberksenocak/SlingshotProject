@@ -21,10 +21,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _timerFirstPos;
     [SerializeField] private Animator[] _obstacleAnimators;
     [SerializeField] private TextMeshProUGUI[] _colorTexts;
+    [SerializeField] private TextMeshProUGUI _levelText;
     public TextMeshProUGUI[] ColorTexts 
     {
         get {return _colorTexts; }
         set {_colorTexts=value; }
+    }
+    public TextMeshProUGUI LevelText
+    {
+        get { return _levelText; }
+        set { _levelText = value; }
+    }
+    public GameObject StartPanel
+    {
+        get { return _startPanel; }
+        set { _startPanel = value; }
     }
     public GameObject InputPanel 
     {
@@ -51,6 +62,11 @@ public class UIManager : MonoBehaviour
     {
         get { return _examplePanelPos; }
         set { _examplePanelPos = value; }
+    }
+    private void Start()
+    {
+        _levelText = transform.GetChild(3).GetChild(4).GetComponent<TextMeshProUGUI>();
+        _levelText.text = "LEVEL " + PlayerPrefs.GetInt("LevelIndex").ToString();
     }
 
     public void StartGameEvents()
